@@ -1,6 +1,7 @@
 import { IsDate, IsEmail } from "class-validator"
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { Gig } from "./gig"
+import { Review } from "./review"
 
 export enum Role {
   CLIENT = "client",
@@ -59,6 +60,8 @@ export class User {
   codeExpirationDate: Date
   @OneToMany(() => Gig, (gig) => gig.sellerId)
   gigs: Gig[]
+  @OneToMany(() => Review, (review) => review.gig)
+  review: Review[]
 
   @Column()
   @IsDate()

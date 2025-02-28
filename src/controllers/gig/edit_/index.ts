@@ -4,13 +4,17 @@ import { Gig } from "../../../entities/gig"
 import Utils from "../../../utils"
 import { IUser } from "../../../interfaces"
 import editGigSchema from "./schema"
+import { DeepPartial } from "typeorm"
 export default async function edit_gig(req: Request, res: Response) {
   const id = parseInt(req.params.id)
   const gig = AppDataSource.getRepository(Gig)
   const user = req.user as IUser
   const valid = Utils.validateSchema(res, editGigSchema, req.body)
   if (!valid) return
-  const existingGig = await gig.findOneBy({ id })
+  const existingGig = (await gig.findOne({
+    where: { id },
+    relations: ["sellerId"],
+  })) as DeepPartial<Gig>
   const image = req.file
     ? `images/gigs/${req.file.filename}`
     : existingGig?.image
@@ -20,7 +24,7 @@ export default async function edit_gig(req: Request, res: Response) {
       message: `Gig not found`,
     })
   }
-  if (existingGig.sellerId !== user.id) {
+  if (existingGig.sellerId?.id !== user.id) {
     return Utils.sendError(res, {
       status: "error",
       message: "You can only edit your own gig",

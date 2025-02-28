@@ -14,7 +14,7 @@ export default async function delete_gig(req: Request, res: Response) {
       message: `Gig with id ${id} is not found`,
     })
   }
-  if (existingGig.sellerId !== user.id) {
+  if (existingGig.sellerId.id !== user.id) {
     return Utils.sendError(res, {
       status: "error",
       message: "You can only delete your gig",

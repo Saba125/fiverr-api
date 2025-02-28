@@ -24,6 +24,7 @@ export default async function add_gig(req: Request, res: Response) {
     sellerId: user.id,
     title: body.title,
   } as DeepPartial<Gig>)
+  await gig.save(dbRes)
   Utils.sendSuccess(res, {
     gig: dbRes,
   })

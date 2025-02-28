@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Order Cancellation
+    style.
+      body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+      .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+      h1 { color: #ff4d4d; }
+      p { font-size: 16px; color: #333; }
+      .order-details { background: #f8d7da; padding: 10px; border-radius: 5px; }
+      .footer { margin-top: 20px; font-size: 14px; color: #888; text-align: center; }
+
+  body
+    .container
+      h1 Order Cancellation Notice
+      p Hello #{userEmail},
+      p We're sorry to inform you that your order has been cancelled.
+
+      .order-details
+        p 📌 <strong>Order ID:</strong> #{orderId}
+        p 🎨 <strong>Gig Name:</strong> #{gigName}
+        p 💰 <strong>Price:</strong> $#{price}
+        p 📅 <strong>Status:</strong> #{status}
+
+      p If this was a mistake or if you have any questions, please contact our support team.
+
+      .footer
+        p &copy; #{year} Your Company Name. All rights reserved.

@@ -1,6 +1,14 @@
 import { IsDate, IsEmail } from "class-validator"
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from "typeorm"
 import { User } from "./user"
+import { Order } from "./order"
+import { Review } from "./review"
 export enum Status {
   ACTIVE = "active",
   BANNED = "banned",
@@ -11,7 +19,7 @@ export class Gig {
   id: number
 
   @ManyToOne(() => User, (user) => user.gigs, { onDelete: "CASCADE" })
-  sellerId: number
+  sellerId: User
   @Column({ nullable: false })
   title: string
   @Column({ nullable: false })
@@ -22,12 +30,17 @@ export class Gig {
   price: number
   @Column({ nullable: false })
   category: string
-  @Column()
+  @Column({ nullable: true })
   image: string
   @Column({ type: "decimal", precision: 10, scale: 2 })
   rating: number
   @Column({ type: "enum", enum: Status, default: Status.ACTIVE })
   status: Status
+  @OneToMany(() => Order, (order) => order.buyer)
+  orders: Order[]
+  @OneToMany(() => Review, (review) => review.gig)
+  review: Review[]
+
   @Column()
   @IsDate()
   createdAt: Date

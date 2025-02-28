@@ -7,5 +7,6 @@ const addGigSchema = Joi.object({
   category: Joi.string().required(),
   rating: Joi.number().required(),
   status: Joi.string().valid("active", "banned").required(),
+  createdAt: Joi.date().iso().required(),
 })
 export default addGigSchema
